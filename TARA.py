@@ -9,7 +9,6 @@ from config import decrypt, encrypted_api_key, password, encrypted_user_password
 DB_FILE = "users2.json"
 ADMIN_USERNAME = user_name
 ADMIN_PASSWORD = decrypt(encrypted_user_password,user_name) # In production, use environment variables
-#YOUR_GEMINI_API_KEY= "AIzaSyCXV9AYcGLu5GaoTZ6j5WvzqeGeZ5bDPds"
 YOUR_GEMINI_API_KEY= decrypt(encrypted_api_key,password)
 
 # Gemini setup
