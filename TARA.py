@@ -2,18 +2,6 @@ import streamlit as st
 import json, os, re, bcrypt
 import google.generativeai as genai
 
-# Configuration
-
-DB_FILE = "users2.json"
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin123" # In production, use environment variables
-YOUR_GEMINI_API_KEY= "AIzaSyCXV9AYcGLu5GaoTZ6j5WvzqeGeZ5bDPds"
-
-# Gemini setup
-
-genai.configure(api_key=YOUR_GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash")
-
 # Load Users from JSON
 
 def load_users():
@@ -71,41 +59,6 @@ def login_user(username, email, password):
 
 def admin_login(username, password):
     return username == ADMIN_USERNAME and password == ADMIN_PASSWORD
-
-# TARA Analysis Function
-
-def tara_analysis(asset_name, use_case):
-    prompt = f"""
-
-    You are an expert in Automotive Cybersecurity following ISO/SAE 21434.
-    Perform a complete Threat Analysis and Risk Assessment (TARA) as per Clause 9 and Clause 15.
-    Inputs:
-        Asset Name: {asset_name}
-        Use Case / Functionality: {use_case}
-    Generate the following for each identified asset:
-    1. Affected CIA properties (only list impacted ones)
-    2. For each affected CIA property:
-        - Damage Scenario
-        - Threat Scenario
-        - Impact Rating (Severe/Major/Moderate/Negligible)
-        -Safety: (Severe,Major,Moderate,Negligible)
-        -Financial: (Severe,Major,Moderate,Negligible)
-        -Operational: (Severe,Major,Moderate,Negligible)
-        -Privacy: (Severe,Major,Moderate,Negligible)
-        - Attack Feasibility Rating: (High/Medium/Low/verylow)
-        -Elapsed time: Enumerate(<=1day,<=week,<=1month,<=6months,>6months)
-        -Specialist expertise: Enumerate(Layman,Proficient,Expert,Multiple experts)
-        -Knowledge of the item or component: Enumerate(Public, Restricted, Confidential,Strictly confidential)
-        -Window of opportunity: Enumerate(Unlimited,Easy,Moderate,Difficult)
-        -Equipment: Enumerate(Standard,Specialized,Bespoke,Multiple bespoke)
-        - Final Risk Value (1, 2, 3, 4, 5)
-        - Risk Treatment (Reduce / Retain / Share / Avoid)
-        - If Final Risk Value > 2, suggest Cybersecurity Control
-        - Else suggest claims
-    Note: Format clearly and use structured bullet points and sub-points
-    """
-    response = model.generate_content(prompt)
-    return response.text
 
 # Streamlit UI
 
