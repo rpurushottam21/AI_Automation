@@ -1,13 +1,16 @@
 import streamlit as st
 import json, os, re, bcrypt
 import google.generativeai as genai
+from config import decrypt, encrypted_api_key, password, encrypted_user_password, user_name
+
 
 # Configuration
 
 DB_FILE = "users2.json"
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin123" # In production, use environment variables
-YOUR_GEMINI_API_KEY= "AIzaSyCXV9AYcGLu5GaoTZ6j5WvzqeGeZ5bDPds"
+ADMIN_USERNAME = user_name
+ADMIN_PASSWORD = decrypt(encrypted_user_password,user_name) # In production, use environment variables
+#YOUR_GEMINI_API_KEY= "AIzaSyCXV9AYcGLu5GaoTZ6j5WvzqeGeZ5bDPds"
+YOUR_GEMINI_API_KEY= decrypt(encrypted_api_key,password)
 
 # Gemini setup
 
