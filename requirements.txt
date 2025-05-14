@@ -1,2 +1,2 @@
-import bcrypt
-import google-generativeai
+bcrypt
+google-generativeai
